@@ -1,1 +1,16 @@
-<app-hero-form></app-hero-form>
+<div class="container d-flex gap-3 my-3">
+  <button
+    *ngFor="let formType of formTypes"
+    [ngClass]="{
+      btn: true,
+      'btn-secondary': currentFormType === formType,
+      'btn-outline-secondary': currentFormType !== formType
+    }"
+    (click)="setFormType(formType)"
+  >
+    Show {{ formType | titlecase }} Form
+  </button>
+</div>
+
+<app-profile-editor *ngIf="currentFormType === 'reactive'"></app-profile-editor>
+<app-hero-form *ngIf="currentFormType === 'template'"></app-hero-form>
