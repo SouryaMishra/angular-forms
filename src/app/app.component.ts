@@ -11,7 +11,7 @@ import { QuestionService } from './question.service';
 })
 export class AppComponent {
   title = 'angular-forms';
-  currentFormType = 'reactive';
+  currentFormTypeIndex = 0;
   formTypes = ['reactive', 'template', 'dynamic'];
   questions$: Observable<QuestionBase<string>[]>;
 
@@ -19,9 +19,11 @@ export class AppComponent {
     this.questions$ = this.questionService.getQuestions();
   }
 
-  setFormType(formType: string): void {
-    if (this.formTypes.includes(formType)) {
-      this.currentFormType = formType;
-    }
+  setFormTypeIndex(index: number): void {
+    this.currentFormTypeIndex = index;
+  }
+
+  updateCurrentFormTypeName(name: string) {
+    if (name.trim()) this.formTypes[this.currentFormTypeIndex] = name;
   }
 }

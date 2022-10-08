@@ -1,20 +1,34 @@
-<div class="container d-flex gap-3 my-3">
+<div class="container">
+  <div class="d-flex gap-3 my-3">
+    <button
+      *ngFor="let formType of formTypes; let i = index"
+      [ngClass]="{
+        btn: true,
+        'btn-secondary': currentFormTypeIndex === i,
+        'btn-outline-secondary': currentFormTypeIndex !== i
+      }"
+      (click)="setFormTypeIndex(i)"
+    >
+      Show {{ formType | titlecase }} Form
+    </button>
+  </div>
+
+  <div class="form-group">
+    <label for="form-name">Update Form Name: </label>
+    <input class="form-control" id="form-name" type="text" #formName />
+  </div>
+  <br />
   <button
-    *ngFor="let formType of formTypes"
-    [ngClass]="{
-      btn: true,
-      'btn-secondary': currentFormType === formType,
-      'btn-outline-secondary': currentFormType !== formType
-    }"
-    (click)="setFormType(formType)"
+    class="btn btn-primary"
+    (click)="updateCurrentFormTypeName(formName.value); formName.value = ''"
   >
-    Show {{ formType | titlecase }} Form
+    Update form name
   </button>
 </div>
 
-<app-profile-editor *ngIf="currentFormType === 'reactive'"></app-profile-editor>
-<app-hero-form *ngIf="currentFormType === 'template'"></app-hero-form>
+<app-profile-editor *ngIf="currentFormTypeIndex === 0"></app-profile-editor>
+<app-hero-form *ngIf="currentFormTypeIndex === 1"></app-hero-form>
 <app-dynamic-form
-  *ngIf="currentFormType === 'dynamic'"
+  *ngIf="currentFormTypeIndex === 2"
   [questions]="questions$ | async"
 ></app-dynamic-form>
